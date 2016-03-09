@@ -143,6 +143,11 @@ impl Registry {
         Ok(try!(json::decode::<Users>(&body)).users)
     }
 
+    pub fn get_crate_data(&mut self, krate: &str) -> Result<String> {
+        let body = try!(self.get(format!("/crates/{}", krate)));
+        Ok(body)
+    }
+
     pub fn publish(&mut self, krate: &NewCrate, tarball: &Path) -> Result<()> {
         let json = try!(json::encode(krate));
         // Prepare the body. The format of the upload request is:
